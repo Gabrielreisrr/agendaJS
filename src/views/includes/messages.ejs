@@ -1,4 +1,4 @@
-<% if(errors.length){ %>
+<% if (errors && errors.length) { %>
     <div class="row my-3">
         <div class="col">
             <div class="alert alert-danger">
@@ -8,15 +8,14 @@
             </div>
         </div>
     </div>
-    <% } %>
-        <% if(success.length){ %>
-            <div class="row my-3">
-                <div class="col">
-                    <div class="alert alert-success">
-                        <% success.forEach((success)=> { %>
-                            <%= success %> <br>
-                                <% }) %>
-                    </div>
-                </div>
+<% } %>
+
+<% if (success.length) { %>
+    <div class="row my-3">
+        <div class="col">
+            <div class="alert alert-success">
+                <%= success %>
             </div>
-            <% } %>
+        </div>
+    </div>
+<% } %>
