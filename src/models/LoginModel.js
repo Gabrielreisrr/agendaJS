@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
-
+const validator = require('validator')
 const LoginSchema = new mongoose.Schema({
-  titulo: { type: String, required: true },
-  descricao: String
+  email: { type: String, required: true },
+  password: { type: String, required: true },
+  
 });
 
 const LoginModel = mongoose.model('Login', LoginSchema);
@@ -14,23 +15,40 @@ class Login {
     this.user = null;
   }
 
-  register() {
+  async register() {
     this.valida();
+    if(this.errors.length > 0) return;
+    
+    try {
+      this.user = await LoginModel.create(this.body);
+    }catch(e){
+      console.log(e)
+    }
+    
   }
 
   valida() {
     //validação
     this.cleanUp();
 
+    if(!validator.isEmail(this.body.email)) this.errors.push('Email inválido!');
+
+    if(this.body.password.length < 3 || this.body.password >= 40) this.errors.push('Senha inválida!')
   }
 
   cleanUp() {
     for(const key in  this.body) {
       if (typeof this.body[key] !== 'string'){
+        this.body[key] = '';
         
       }
     }
+    this.body = {
+      email: this.body.email,
+      password: this.body.password
+    }
   }
+
 }
 
 module.exports = Login;
