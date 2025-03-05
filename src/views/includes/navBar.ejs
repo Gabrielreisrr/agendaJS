@@ -6,14 +6,15 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto   ">
-                <% if(!user) { %>
+            <ul class="navbar-nav ms-auto">
+                <% if(!user && currentPath !== "/login/index") { %>
 
                 <li class="nav-item ">
                     <a class="nav-link" href="login/index">Entrar</a>
                 </li>
 
-                <% }else{ %>
+                <% } %>
+                <% if(user){ %>
 
                 <li class="nav-item ">
                     <a class="nav-link" href="login/logout">Sair</a>
@@ -23,7 +24,7 @@
 
 
                 <li class="nav-item ">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="/contato/index">Cadastrar Contato</a>
                 </li>
             </ul>
         </div>
