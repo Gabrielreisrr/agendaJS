@@ -1,0 +1,5 @@
+{
+    "css.format.spaceAroundSelectorSeparator": true,
+    "less.format.spaceAroundSelectorSeparator": true,
+    "scss.format.spaceAroundSelectorSeparator": true
+}
