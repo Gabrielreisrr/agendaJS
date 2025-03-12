@@ -67,13 +67,14 @@ class Contato {
     this.contato = ContatoModel.findByIdAndUpdate(id, this.body, { new: true });
   }
 
-  static async buscaContatos(id) {
-
-    if (typeof id !== 'string') return;
-
-    const contatos = await ContatoModel.find().sort({ criadoEm: 1 });
-
-    return contatos;
+  static async buscaContatos() {
+    try {
+      const contatos = await ContatoModel.find().sort({ criadoEm: -1 }); // Ordena do mais recente para o mais antigo
+      return contatos;
+    } catch (error) {
+      console.error('Erro ao buscar contatos:', error);
+      return []; // Retorna um array vazio em caso de erro
+    }
   }
 
   static async delete(id) {

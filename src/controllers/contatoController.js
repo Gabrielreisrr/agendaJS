@@ -5,7 +5,7 @@ exports.index = (req, res) => {
     res.render("contato", { contato: {} });
 };
 
-exports.index = async (req, res) => {
+exports.register = async (req, res) => {
 
     try {
         const contato = new Contato(req.body);
@@ -68,6 +68,6 @@ exports.delete = async (req, res) => {
     res.render("contato", { contato });
 
     req.flash('success', 'contato apagado com sucesso');
-    req.session.save(() => res.redirect(`back`));
+    req.session.save(() => res.redirect(`/`));
     return;
 }
