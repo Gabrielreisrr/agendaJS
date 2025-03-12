@@ -11,8 +11,6 @@ const ContatoSchema = new mongoose.Schema({
 
 const ContatoModel = mongoose.model('Contato', ContatoSchema);
 
-
-
 class Contato {
   constructor(body) {
     this.body = body;
@@ -25,22 +23,18 @@ class Contato {
     this.contato = await ContatoModel.create(this.body);
   };
 
-
   valida() {
     this.cleanUp();
 
-    console.log('entrou no clean up');
     if (this.body.email && !validator.isEmail(this.body.email)) this.errors.push('Email inválido!');
     if (!this.body.nome) this.errors.push('Nome é um campo obrigatório');
     if (!this.body.email && !this.body.telefone) this.errors.push('pelo menos 1 contato precisa ser preenchido, email ou tel');
-
   };
 
   cleanUp() {
     for (const key in this.body) {
       if (typeof this.body[key] !== 'string') {
         this.body[key] = '';
-
       }
     }
     this.body = {
@@ -52,11 +46,9 @@ class Contato {
   }
 
   static async buscaPorId(id) {
-
     if (typeof id !== 'string') return;
 
     const contato = await ContatoModel.findById(id);
-
     return contato;
   }
 
@@ -64,27 +56,25 @@ class Contato {
     if (typeof id !== 'string') return;
     this.valida();
     if (this.errors.length > 0) return;
-    this.contato = ContatoModel.findByIdAndUpdate(id, this.body, { new: true });
+    this.contato = await ContatoModel.findByIdAndUpdate(id, this.body, { new: true });
   }
 
   static async buscaContatos() {
     try {
-      const contatos = await ContatoModel.find().sort({ criadoEm: -1 }); // Ordena do mais recente para o mais antigo
+      const contatos = await ContatoModel.find().sort({ criadoEm: -1 });
       return contatos;
     } catch (error) {
       console.error('Erro ao buscar contatos:', error);
-      return []; // Retorna um array vazio em caso de erro
+      return [];
     }
   }
 
   static async delete(id) {
     if (typeof id !== 'string') return;
 
-    const contato = await ContatoModel.findOneAndDelete({ id: id })
-
+    const contato = await ContatoModel.findOneAndDelete({ _id: id });
     return contato;
   }
-
 }
 
 module.exports = Contato;
