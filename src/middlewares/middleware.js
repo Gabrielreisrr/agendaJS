@@ -3,6 +3,9 @@ exports.middlewareGlobal = (req, res, next) => {
   res.locals.success = req.flash('success');
   res.locals.user = req.session.user;
   res.locals.currentPath = req.originalUrl;
+
+  console.log('Erros:', res.locals.errors);
+  console.log('Sucesso:', res.locals.success);
   next();
 };
 

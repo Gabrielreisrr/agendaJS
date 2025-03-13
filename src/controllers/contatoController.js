@@ -45,13 +45,16 @@ exports.edit = async (req, res) => {
         await contato.edit(id);
 
         if (contato.errors.length > 0) {
-            req.flash('errors', contato.errors);
-            req.session.save(() => res.redirect('/contato/index'));
+            req.flash('errors', contato.errors.join(', '));
+            // console.log('Erros contato:', res.locals.errors);
+            req.session.save(() => {
+                res.redirect('/contato/index');
+            });
             return;
         }
 
         req.flash('success', 'contato editado com sucesso');
-        req.session.save(() => res.redirect(`/contato/index/${contato.contato._id}`));
+        req.session.save(() => res.redirect(`/`));
         return;
     } catch (e) {
         console.log(e);
